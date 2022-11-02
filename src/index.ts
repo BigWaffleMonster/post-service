@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 import { buildSubgraphSchema } from '@apollo/federation'
 import { ApolloServer } from 'apollo-server'
 
@@ -5,6 +7,7 @@ import {
   ApolloServerPluginLandingPageLocalDefault,
   ApolloServerPluginLandingPageProductionDefault,
 } from 'apollo-server-core'
+import mongoose from 'mongoose'
 
 import { resolvers } from './graphql/resolvers'
 import { typeDefs } from './graphql/typeDefs'
@@ -25,6 +28,8 @@ const server = new ApolloServer({
 
 async function start() {
   try {
+    await mongoose.connect(String(process.env.DATABASE_URL))
+
     const { url } = await server.listen({ port })
     console.log(`Post server at ${url}`)
   } catch (e) {

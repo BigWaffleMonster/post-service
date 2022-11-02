@@ -21,7 +21,7 @@ export const typeDefs = gql`
 
   extend type Query {
     getPosts: [Post!]
-    getPost(id: String): Post!
+    getPost(post_id: String): Post!
     getComments(post_id: String): [Comment!]
   }
 
